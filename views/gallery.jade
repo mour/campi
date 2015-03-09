@@ -1,0 +1,21 @@
+
+.camera-box.row.well(ng-controller="GalleryController")
+	h2. Gallery
+
+	tabset
+		tab(select="get_picture_list()")
+			tab-heading
+				i.glyphicon.glyphicon-camera
+				|&nbsp;Pictures
+			p
+				|Boo
+			img(ng-repeat="pic in picture_list", src="{{pic['path']}}", width="200pt")
+
+		tab(select="get_video_list()")
+			tab-heading
+				i.glyphicon.glyphicon-facetime-video
+				|&nbsp;Videos				
+			|Yah - {{ video_list }}
+
+
+

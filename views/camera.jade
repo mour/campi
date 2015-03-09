@@ -2,7 +2,7 @@
 .camera-box.row.well(ng-controller="camera_controller")
 	h2. Camera settings
 	
-	form.form-horizontal(novalidate, class="col-lg-12", role="form")
+	form.form-horizontal#camera-form(novalidate, class="col-lg-12", role="form")
 		.col-lg-6.col-md-6
 			fieldset
 				legend= "Common options"
@@ -53,28 +53,45 @@
 						span= "Saturation: {{ curr_settings['saturation'] }}"
 						input(type="range", ng-model="curr_settings['saturation']", min="{{options['saturation']['min']}}", max="{{options['saturation']['max']}}")
 
-				//- .row
-				//- 	.col-xs-12
-				//- 		span= "EV correction: {{ curr_settings['ev'] }}"
-				//- 		input.form-control(type="range", ng-model="curr_settings['ev']", min="{{options['ev']['min']}}", max="{{options['ev']['max']}}", step="0.1")
+				.row
+					.col-xs-12
+						span= "EV correction: {{ curr_settings['ev'] }}"
+						input.form-control(type="range", ng-model="curr_settings['ev']", min="{{options['ev']['min']}}", max="{{options['ev']['max']}}", step="0.1")
 
 				.row
 					.col-sm-6.col-xs-12
 						span= "Exposure mode:"
-						select(ng-model="curr_settings['ex']", ng-options="opt.name as opt.pretty for opt in options['ex']['values']")
+						ui-select(ng-model="curr_settings['ex']", search-enabled="false")
+							ui-select-match
+								| {{$select.selected.pretty}}
+							ui-select-choices(repeat="opt.name as opt in options['ex']['values']")
+								div(ng-bind-html="opt.pretty")
 
 					.col-sm-6.col-xs-12
 						span= "White balance:"
-						select.form-control(ng-model="curr_settings['awb']", ng-options="opt.name as opt.pretty for opt in options['awb']['values']")
+						ui-select(ng-model="curr_settings['awb']")
+							ui-select-match
+								| {{$select.selected.pretty}}
+							ui-select-choices(repeat="opt.name as opt in options['awb']['values']")
+								div(ng-bind-html="opt.pretty")
 
 				.row
 					.col-sm-6.col-xs-12
 						span= "Image effects:"
-						select(ng-model="curr_settings['ifx']", ng-options="opt.name as opt.pretty for opt in options['ifx']['values']")
+						ui-select(ng-model="curr_settings['ifx']")
+							ui-select-match
+								| {{$select.selected.pretty}}
+							ui-select-choices(repeat="opt.name as opt in options['ifx']['values']")
+								div(ng-bind-html="opt.pretty")
+
 
 					.col-sm-6.col-xs-12
 						span= "Metering mode:"
-						select(ng-model="curr_settings['metering']", ng-options="opt.name as opt.pretty for opt in options['metering']['values']")
+						ui-select(ng-model="curr_settings['metering']")
+							ui-select-match
+								| {{$select.selected.pretty}}
+							ui-select-choices(repeat="opt.name as opt in options['metering']['values']")
+								div(ng-bind-html="opt.pretty")
 
 				.row
 					.col-xs-4
@@ -113,7 +130,11 @@
 				legend= "Controls"
 
 				span= "Mode:"
-					select(ng-model="curr_settings['mode']", ng-options="opt.name as opt.pretty for opt in options['mode']['values']")
+					ui-select(ng-model="curr_settings['ifxmode']")
+						ui-select-match
+							| {{$select.selected.pretty}}
+						ui-select-choices(repeat="opt.name as opt in options['mode']['values']")
+							div(ng-bind-html="opt.pretty")
 
 
 				button.btn.btn-primary(ng-click="start_camera()").
@@ -123,3 +144,5 @@
 
 		p.
 			{{ curr_settings }}
+
+

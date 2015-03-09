@@ -1,7 +1,7 @@
 
 (function() {
 
-	var app = angular.module("campi", []);
+	var app = angular.module("campi", ['ui.select', 'ngSanitize']);
 
 
 	app.controller("camera_controller", ['$scope', '$http', function($scope, $http) {
@@ -133,5 +133,10 @@
 				});
 
 			}]);
+
+
+	app.config(function(uiSelectConfig) {
+		uiSelectConfig.searchEnabled = false;
+	});
 
 })();

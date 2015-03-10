@@ -1,148 +1,144 @@
+.row(ng-controller="camera_controller")
+	.col-xs-12.well
+		h2= "Camera settings"
+		form.form-horizontal#camera-form(novalidate, role="form")
+			.col-md-6
+				fieldset
+					legend= "Common options"
 
-.camera-box.row.well(ng-controller="camera_controller")
-	h2. Camera settings
-	
-	form.form-horizontal#camera-form(novalidate, class="col-lg-12", role="form")
-		.col-lg-6.col-md-6
-			fieldset
-				legend= "Common options"
+					.form-group
+						.col-md-3
+							label(for='width-control')= "Width:"
+							input#width-control.form-control(type="number", ng-model="curr_settings['width']", min="{{options['width']['min']}}", max="{{options['width']['max']}}")
 
-				.row
-					span.col-md-3.col-sm-4.col-xs-6= "Hello"
-					span.col-md-3.col-sm-4.col-xs-6= "Cruel"
-					span.col-md-3.col-sm-4.col-xs-6= "World"
-					span.col-md-3.col-sm-4.col-xs-6= "!!!"
+						.col-md-3
+							label(for='height-control')= "Height:"
+							input#height-control.form-control(type="number", ng-model="curr_settings['height']", min="{{options['height']['min']}}", max="{{options['height']['max']}}")
 
+						//- Move to controls?						
+						.col-md-3.col-md-offset-3
+							label(for='timeout-control')= "Timeout:"
+							input#timeout-control.form-control(type="number", ng-model="curr_settings['timeout']", min="{{options['timeout']['min']}}", max="{{options['timeout']['max']}}")
 
-				.row
-					.form-group.col-sm-6.col-xs-12
-						label.col-xs-2= "Width:"
-						input.col-xs-10.form-control(type="number", ng-model="curr_settings['width']", min="{{options['width']['min']}}", max="{{options['width']['max']}}")
+					.form-group
+						.col-xs-12
+							label(for='quality-control')= "Quality: {{ curr_settings['quality'] }}"
+							input#quality-control.form-control(type="range", ng-model="curr_settings['quality']", min="{{options['quality']['min']}}", max="{{options['quality']['max']}}")
 
-					.col-sm-6.col-xs-12
-						span= "Height:"
-						input(type="number", ng-model="curr_settings['height']", min="{{options['height']['min']}}", max="{{options['height']['max']}}")
+					.form-group
+						.col-xs-12
+							label(for='sharpness-control')= "Sharpness: {{ curr_settings['sharpness'] }}"
+							input#sharpness-control.form-control(type="range", ng-model="curr_settings['sharpness']", min="{{options['sharpness']['min']}}", max="{{options['sharpness']['max']}}")
 
-				.row
-					.col-xs-12
-						span= "Timeout:"
-						input(type="number", ng-model="curr_settings['timeout']", min="{{options['timeout']['min']}}", max="{{options['timeout']['max']}}")
+					.form-group
+						.col-xs-12
+							label(for='contrast-control')= "Contrast: {{ curr_settings['contrast'] }}"
+							input#contrast-control.form-control(type="range", ng-model="curr_settings['contrast']", min="{{options['contrast']['min']}}", max="{{options['contrast']['max']}}")
 
-				.row
-					.col-xs-12
-						span= "Quality: {{ curr_settings['quality'] }}"
-						slider(ng-model="curr_settings['quality']", min="{{options['quality']['min']}}", max="{{options['quality']['max']}}")
+					.form-group
+						.col-xs-12
+							label(for='brightness-control')= "Brightness: {{ curr_settings['brightness'] }}"
+							input#brightness-control.form-control(type="range", ng-model="curr_settings['brightness']", min="{{options['brightness']['min']}}", max="{{options['brightness']['max']}}")
+			
+					.form-group
+						.col-xs-12
+							label(for='saturation-control')= "Saturation: {{ curr_settings['saturation'] }}"
+							input#saturation-control.form-control(type="range", ng-model="curr_settings['saturation']", min="{{options['saturation']['min']}}", max="{{options['saturation']['max']}}")
 
-				.row
-					.col-xs-12
-						span= "Sharpness: {{ curr_settings['sharpness'] }}"
-						input(type="range", ng-model="curr_settings['sharpness']", min="{{options['sharpness']['min']}}", max="{{options['sharpness']['max']}}")
+					.form-group
+						.col-xs-12
+							label(for='ev-control')= "EV correction: {{ curr_settings['ev'] }}"
+							input#ev-control.form-control(type="range", ng-model="curr_settings['ev']", min="{{options['ev']['min']}}", max="{{options['ev']['max']}}", step="0.1")
 
-				.row
-					.col-xs-12
-						span= "Contrast: {{ curr_settings['contrast'] }}"
-						input(type="range", ng-model="curr_settings['contrast']", min="{{options['contrast']['min']}}", max="{{options['contrast']['max']}}")
+					.form-group
+						.col-sm-6
+							label(for='exposure-control')= "Exposure mode:"
+							ui-select#exposure-control(ng-model="curr_settings['ex']", search-enabled="false")
+								ui-select-match
+									| {{$select.selected.pretty}}
+								ui-select-choices(repeat="opt.name as opt in options['ex']['values']")
+									div(ng-bind-html="opt.pretty")
 
-				.row
-					.col-xs-12
-						span= "Brightness: {{ curr_settings['brightness'] }}"
-						input(type="range", ng-model="curr_settings['brightness']", min="{{options['brightness']['min']}}", max="{{options['brightness']['max']}}")
-		
-				.row
-					.col-xs-12
-						span= "Saturation: {{ curr_settings['saturation'] }}"
-						input(type="range", ng-model="curr_settings['saturation']", min="{{options['saturation']['min']}}", max="{{options['saturation']['max']}}")
+						.col-sm-6
+							label(for='wb-control')= "White balance:"
+							ui-select#wb-control(ng-model="curr_settings['awb']")
+								ui-select-match
+									| {{$select.selected.pretty}}
+								ui-select-choices(repeat="opt.name as opt in options['awb']['values']")
+									div(ng-bind-html="opt.pretty")
 
-				.row
-					.col-xs-12
-						span= "EV correction: {{ curr_settings['ev'] }}"
-						input.form-control(type="range", ng-model="curr_settings['ev']", min="{{options['ev']['min']}}", max="{{options['ev']['max']}}", step="0.1")
-
-				.row
-					.col-sm-6.col-xs-12
-						span= "Exposure mode:"
-						ui-select(ng-model="curr_settings['ex']", search-enabled="false")
-							ui-select-match
-								| {{$select.selected.pretty}}
-							ui-select-choices(repeat="opt.name as opt in options['ex']['values']")
-								div(ng-bind-html="opt.pretty")
-
-					.col-sm-6.col-xs-12
-						span= "White balance:"
-						ui-select(ng-model="curr_settings['awb']")
-							ui-select-match
-								| {{$select.selected.pretty}}
-							ui-select-choices(repeat="opt.name as opt in options['awb']['values']")
-								div(ng-bind-html="opt.pretty")
-
-				.row
-					.col-sm-6.col-xs-12
-						span= "Image effects:"
-						ui-select(ng-model="curr_settings['ifx']")
-							ui-select-match
-								| {{$select.selected.pretty}}
-							ui-select-choices(repeat="opt.name as opt in options['ifx']['values']")
-								div(ng-bind-html="opt.pretty")
+					.form-group
+						.col-sm-6
+							label(for='ifx-control')= "Image effects:"
+							ui-select#ifx-control(ng-model="curr_settings['ifx']")
+								ui-select-match
+									| {{$select.selected.pretty}}
+								ui-select-choices(repeat="opt.name as opt in options['ifx']['values']")
+									div(ng-bind-html="opt.pretty")
 
 
-					.col-sm-6.col-xs-12
-						span= "Metering mode:"
-						ui-select(ng-model="curr_settings['metering']")
-							ui-select-match
-								| {{$select.selected.pretty}}
-							ui-select-choices(repeat="opt.name as opt in options['metering']['values']")
-								div(ng-bind-html="opt.pretty")
+						.col-sm-6.col-xs-12
+							label(for='metering-control')= "Metering mode:"
+							ui-select#metering-control(ng-model="curr_settings['metering']")
+								ui-select-match
+									| {{$select.selected.pretty}}
+								ui-select-choices(repeat="opt.name as opt in options['metering']['values']")
+									div(ng-bind-html="opt.pretty")
 
-				.row
-					.col-xs-4
-						span= "Vstab:"
-						input(type="checkbox", ng-model="curr_settings['vstab']")
+					.form-group
+						.col-xs-4
+							label(for='vstab-control')= "Vstab:"
+							input#vstab-control(type="checkbox", ng-model="curr_settings['vstab']")
 
-					.col-xs-4
-						span= "Horizontal flip:"
-						input(type="checkbox", ng-model="curr_settings['hflip']")
+						.col-xs-4
+							label(for='hflip-control')= "Horizontal flip:"
+							input#hflip-control(type="checkbox", ng-model="curr_settings['hflip']")
 
-					.col-xs-4
-						span= "Vertical flip:"
-						input(type="checkbox", ng-model="curr_settings['vflip']")
+						.col-xs-4
+							label(for='vflip-control')= "Vertical flip:"
+							input#vflip-control(type="checkbox", ng-model="curr_settings['vflip']")
 
-		.col-md-6
-			fieldset(ng-disabled="curr_settings['mode'] != 'timelapse'")
-				legend= "Timelapse options"
-				.row
-					.col-xs-12
-						span= "Timelapse:"
-						input(type="number", ng-model="curr_settings['timelapse']", min="{{options['timelapse']['min']}}")
+			.col-md-6
+				fieldset(ng-disabled="curr_settings['mode'] != 'timelapse'")
+					legend= "Timelapse options"
+					.form-group
+						.col-xs-12
+							label(for='timelapse-control')= "Timelapse:"
+							input#timelapse-control.form-control(type="number", ng-model="curr_settings['timelapse']", min="{{options['timelapse']['min']}}")
 
-			fieldset(ng-disabled="curr_settings['mode'] != 'video'")
-				legend= "Video options"
-				.row
-					.col-sm-6.col-xs-12
-						span= "Bitrate:"
-						input(type="number", ng-model="curr_settings['bitrate']", min="{{options['bitrate']['min']}}", max="{{options['bitrate']['max']}}")
+				fieldset(ng-disabled="curr_settings['mode'] != 'video'")
+					legend= "Video options"
+					.form-group
+						.col-sm-6.col-xs-12
+							label(for='bitrate-control')= "Bitrate:"
+							input#bitrate-control.form-control(type="number", ng-model="curr_settings['bitrate']", min="{{options['bitrate']['min']}}", max="{{options['bitrate']['max']}}")
 
-					.col-sm-6.col-xs-12
-						span= "Framerate:"
-						input(type="number", ng-model="curr_settings['framerate']", min="{{options['framerate']['min']}}", max="{{options['framerate']['max']}}")
-
-
-			fieldset
-				legend= "Controls"
-
-				span= "Mode:"
-					ui-select(ng-model="curr_settings['ifxmode']")
-						ui-select-match
-							| {{$select.selected.pretty}}
-						ui-select-choices(repeat="opt.name as opt in options['mode']['values']")
-							div(ng-bind-html="opt.pretty")
+						.col-sm-6.col-xs-12
+							label(for='framerate-control')= "Framerate:"
+							input#framerate-control.form-control(type="number", ng-model="curr_settings['framerate']", min="{{options['framerate']['min']}}", max="{{options['framerate']['max']}}")
 
 
-				button.btn.btn-primary(ng-click="start_camera()").
-					Take {{ curr_settings['mode'] }}
+				fieldset
+					legend= "Controls"
+
+					.form-group
+						.col-xs-12
+							label(for='mode-control')= "Mode:"
+							ui-select#mode-control(ng-model="curr_settings['mode']")
+								ui-select-match
+									| {{$select.selected.pretty}}
+								ui-select-choices(repeat="opt.name as opt in options['mode']['values']")
+									div(ng-bind-html="opt.pretty")
+
+					.form-group
+						.col-xs-12
+							button.btn.btn-primary(ng-click="start_camera()").
+								Take {{ curr_settings['mode'] }}
 
 
-
-		p.
-			{{ curr_settings }}
+					.form-group
+						.col-xs-12
+							p(style="word-break: break-all").
+								{{ curr_settings }}
 
 

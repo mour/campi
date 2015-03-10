@@ -8,9 +8,10 @@
 			tab-heading
 				i.glyphicon.glyphicon-camera
 				|&nbsp;Pictures
-			p
-				|Boo
-			img(ng-repeat="photo in photo_list", ng-src="{{photo['path']}}", width="200pt")
+
+			.row.gallery-row(ng-repeat="photo_row in photo_list | groupBy: 6")
+				.col-md-2(ng-repeat="photo in photo_row")
+					img.img-responsive.img-rounded(ng-src="{{photo['path']}}")
 
 		tab(select="get_video_list()")
 			tab-heading

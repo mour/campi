@@ -7,12 +7,12 @@ var uuid = require('node-uuid');
 
 var fs = require('fs');
 
-router.post('/take_pic', function(req, res) {
+router.post('/start_camera', function(req, res) {
 	var db = req.db;
 
 	var settings = req.body;
 	
-	var urlpath = "pictures/" + uuid.v4() + ".jpg";
+	var urlpath = "photos/" + uuid.v4() + ".jpg";
 
 	settings.output = "./public/" + urlpath;
 
@@ -26,7 +26,7 @@ router.post('/take_pic', function(req, res) {
 
 	var time = new Date();
 
-	db.put("pictures|" + time, {timestamp: time, path: urlpath }, {}, function(err) {
+	db.put("photos|" + time, {timestamp: time, path: urlpath }, {}, function(err) {
 		if (err) {
 			console.log(err);
 		}

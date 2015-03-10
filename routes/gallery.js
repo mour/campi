@@ -3,18 +3,18 @@ var router = express.Router();
 
 
 /* GET users listing. */
-router.get('/picture_list', function(req, res) {
+router.get('/photo_list', function(req, res) {
 	var db = req.db;
 	
 	var page = req.page;
 
 	var pics = [];
-	db.createReadStream({gte: 'pictures|', lte: 'pictures|\xff'})
+	db.createReadStream({gte: 'photos|', lte: 'photos|\xff'})
 		.on('data', function(data) {
 			pics.push(data.value);
 		})
 		.on('error', function(err) {
-			console.log('Error while reading picture list from DB.');
+			console.log('Error while reading photo list from DB.');
 		})
 		.on('end', function() {
 			res.send(pics);

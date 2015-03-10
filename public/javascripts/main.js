@@ -1,7 +1,7 @@
 
 (function() {
 
-	var app = angular.module("campi", ['ui.select', 'ngSanitize']);
+	var app = angular.module("campi", ['ui.select', 'ngSanitize', 'ui.bootstrap']);
 
 
 	app.controller("camera_controller", ['$scope', '$http', function($scope, $http) {
@@ -100,10 +100,10 @@
 
 
 		$scope.start_camera = function() {
-			$http.post('/camera/take_pic', $scope.curr_settings).success(function(data) {
+			$http.post('/camera/start_camera', $scope.curr_settings).success(function(data) {
 				console.log(data);
 
-				$scope.$emit('picture_taken');
+				$scope.$emit('img_vid_ready');
 			});
 		}
 
@@ -114,10 +114,11 @@
 			["$scope", "$http", "$rootScope", 
 			 function($scope, $http, $rootScope) {
 
-				$scope.get_picture_list = function() {
-					$http.get('/gallery/picture_list').success(function(data) {
+				$scope.get_photo_list = function() {
+					$http.get('/gallery/photo_list').success(function(data) {
+						console.log("photo_list")
 						console.log(data);
-						$scope.picture_list = data;
+						$scope.photo_list = data;
 					});
 				}
 
@@ -128,8 +129,9 @@
 					});
 				}
 
-				$rootScope.$on('picture_taken', function(event) {
-					$scope.get_picture_list();
+				$rootScope.$on('img_vid_ready', function(event) {
+					// TODO check which tab (photo, timelapse, video) is active and refresh it
+					$scope.get_photo_list();
 				});
 
 			}]);

@@ -1,15 +1,16 @@
 
-.camera-box.row.well(ng-controller="GalleryController")
-	h2. Gallery
+.row.well(ng-controller="gallery_controller")
+	h2.
+		Gallery
 
 	tabset
-		tab(select="get_picture_list()")
+		tab(select="get_photo_list()")
 			tab-heading
 				i.glyphicon.glyphicon-camera
 				|&nbsp;Pictures
 			p
 				|Boo
-			img(ng-repeat="pic in picture_list", src="{{pic['path']}}", width="200pt")
+			img(ng-repeat="photo in photo_list", ng-src="{{photo['path']}}", width="200pt")
 
 		tab(select="get_video_list()")
 			tab-heading

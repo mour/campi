@@ -26,7 +26,7 @@ router.post('/start_camera', function(req, res) {
 
 	var time = new Date();
 
-	db.put("photos|" + time, {timestamp: time, path: urlpath }, {}, function(err) {
+	db.put("photos|" + time, {timestamp: time, url: urlpath, thumb_url: urlpath }, {}, function(err) {
 		if (err) {
 			console.log(err);
 		}

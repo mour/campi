@@ -1,7 +1,7 @@
 
 (function() {
 
-	var app = angular.module("campi", ['ui.select', 'ngSanitize', 'ui.bootstrap', 'angular-underscore']);
+	var app = angular.module("campi", ['ui.select', 'ngSanitize', 'ui.bootstrap', 'angular-underscore', 'bootstrapLightbox']);
 
 	app.filter('groupBy', function() {
 
@@ -128,8 +128,8 @@
 
 
 	app.controller("gallery_controller", 
-			["$scope", "$http", "$rootScope", 
-			 function($scope, $http, $rootScope) {
+			['$scope', '$http', '$rootScope', 'Lightbox',
+			 function($scope, $http, $rootScope, Lightbox) {
 
 				$scope.get_photo_list = function() {
 					$http.get('/gallery/photo_list').success(function(data) {
@@ -144,6 +144,10 @@
 						console.log(data);
 						$scope.video_list = data;
 					});
+				}
+
+				$scope.open_photo = function(index) {
+					Lightbox.openModal($scope.photo_list, index);
 				}
 
 				$rootScope.$on('img_vid_ready', function(event) {

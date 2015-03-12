@@ -9,8 +9,11 @@
 				i.glyphicon.glyphicon-camera
 				|&nbsp;Pictures
 
-			.col-xs-6.col-md-4.gallery-thumbnail(ng-repeat="photo in photo_list")
-				img.img-responsive.img-rounded(ng-src="{{photo['path']}}")
+			.col-xs-6.col-md-4.gallery-thumbnail(ng-repeat="photo in photo_list", style="list-style-type: none")
+				a(ng-click="open_photo($index)", href="")
+					img.img-thumbnail(ng-src="{{photo['thumb_url']}}")
+
+
 
 		tab(select="get_video_list()")
 			tab-heading

@@ -8,29 +8,39 @@ var uuid = require('node-uuid');
 var fs = require('fs');
 
 router.post('/start_camera', function(req, res) {
+	console.log("start_camera")
+
 	var db = req.db;
-
 	var settings = req.body;
-	
-	var urlpath = "photos/" + uuid.v4() + ".jpg";
 
-	settings.output = "./public/" + urlpath;
+	var uuid_str = uuid.v4();
+	
+	var img_url = "photos/" + uuid_str + ".jpg";
+
+	settings.output = "./public/" + img_url;
+
+	var thumb_url = "photos/thumb-" + uuid_str + ".jpg";
 
 	var rs = fs.createReadStream("./photo.jpg", { autoClose: true });
 	var ws = fs.createWriteStream(settings.output);
 
 	rs.pipe(ws);
 
+	var rs_thumb = fs.createReadStream("./photo-thumb.jpg", { autoClose: true });
+	var ws_thumb = fs.createWriteStream("./public/" + thumb_url);
+
+	rs_thumb.pipe(ws_thumb);
+
 
 	console.log(settings);
 
 	var time = new Date();
 
-	db.put("photos|" + time, {timestamp: time, url: urlpath, thumb_url: urlpath }, {}, function(err) {
+	db.put("photos|" + time, {'timestamp': time, 'url': img_url, 'thumb_url': thumb_url }, {}, function(err) {
 		if (err) {
 			console.log(err);
 		}
-		console.log(urlpath);
+		console.log(img_url);
 		console.log("saved");
 	});
 

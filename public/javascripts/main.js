@@ -131,11 +131,16 @@
 			['$scope', '$http', '$rootScope', 'Lightbox',
 			 function($scope, $http, $rootScope, Lightbox) {
 
+			 	$scope.images_per_page = 12;
+			 	$scope.num_images = 0;
+			 	$scope.current_page = 1;
+
 				$scope.get_photo_list = function() {
 					$http.get('/gallery/photo_list').success(function(data) {
 						console.log("photo_list")
 						console.log(data);
 						$scope.photo_list = data;
+						$scope.num_images = data.length;
 					});
 				}
 
